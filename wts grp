@@ -1,0 +1,176 @@
+create a folder in index.html
+git init
+git add .
+git branch -M main
+git commit -m "initial commit"
+git remote add origin "repourl"
+git push -u origin main
+
+
+
+git pull //to fetch the files from remote to local
+git branch //shows all branches
+git checkout branchname //switch branches
+git branch -d 
+git log
+
+git merge feature
+
+docker image
+install wsl by following steps:
+1. open start menu 
+search for turn windows features on and off 
+press enter
+scroll down you'll find windows subsystem for linux
+open cmd
+type wsl --help to check if it is working
+type the following command >wsl --install -d Ubuntu
+
+open chrome and download docker desktop for windows arm64
+install docker desktop
+create an account in docker hub
+
+create a directory in your system
+>mkdir my-app
+>cd mp-app
+create index.html and add following 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World</title>
+</head>
+<body>
+    <h1>Hello, World!</h1>
+    <p>Welcome to my Dockerized HTML page!</p>
+</body>
+</html>
+
+create "Dockerfile" and add following 
+
+# Use a lightweight web server image
+FROM nginx:alpine
+
+# Copy the HTML file to the default directory served by Nginx
+COPY index.html /usr/share/nginx/html/index.html
+
+# Expose port 80 to access the web server
+EXPOSE 80
+
+use the following commands to create docker image
+
+make sure docker desktop is running
+
+in your project directory run the following
+>docker build -t your-repo-name/my-app .
+>docker run -p 8080:80 your-repo-name/my-app
+open browser and search for localhost:8080 to see application
+>docker push your-repo-name/my-app
+
+
+
+
+open jenkins
+click on new item
+give the project name 
+click on freestyle project
+click ok
+select git as source code management
+provide github url
+click on add post build actions 
+click on execute windows batch command
+
+provide python.exe url and file name which is present in github repo
+//to find python url use cmd in windows and type >where python
+example:
+C:\Users\anjal\AppData\Local\Programs\Python\Python311\python.exe hello.py
+
+click on save
+click on build and view console output
+
+
+
+
+
+open jenkins
+click on manage jenkins
+click on plugins
+click on available plugins
+search for "HTML publisher"
+select and install
+go to dashboard
+
+click on new item
+give the project name 
+click on freestyle project
+click ok
+select git as source code management
+provide github url
+click on add post build actions 
+click on publish html reports   //make sure you have the html file in your github repo
+click on add
+provide html directory as .
+provide index pages as your html file name
+click on save
+
+to view output click on html report in the project which is present under configure project tab
+
+
+
+
+
+pen cmd
+run the following to create a folder
+>mkdir hello-selenium
+>cd hello-selenium
+
+initialize node project
+>npm init -y
+
+install selenium-webdriver package
+>npm install selenium-webdriver
+
+create index.js file
+add the following code in index.js
+
+const { Builder, By, Key, until } = require('selenium-webdriver');
+const chrome = require('selenium-webdriver/chrome');
+
+(async () => {
+    const driver = await new Builder()
+        .forBrowser('chrome')
+        .setChromeOptions(new chrome.Options())
+        .build();
+
+    try {
+        // Test Case 1: Navigate to Google and verify title
+        await driver.get('https://www.google.com');
+        await driver.wait(until.titleContains('Google'), 10000);
+        console.log('Test Case 1 Passed: Title contains "Google"');
+
+        // Test Case 2: Search for "Selenium" on Google
+        await driver.findElement(By.name('q')).sendKeys('Selenium', Key.RETURN);
+        await driver.wait(until.titleContains('Selenium'), 10000);
+        console.log('Test Case 2 Passed: Title contains "Selenium"');
+
+        // Test Case 3: Verify search results
+        const searchResults = await driver.findElements(By.css('div.g'));
+        console.log(Test Case 3 Passed: Found ${searchResults.length} search results);
+
+        // Test Case 4: Verify the presence of the search input box
+        const searchInput = await driver.findElement(By.name('q'));
+        const isSearchInputDisplayed = await searchInput.isDisplayed();
+        console.log(Test Case 4 Passed: Search input box is displayed: ${isSearchInputDisplayed});
+
+    } catch (error) {
+        console.error('One or more test cases failed:', error);
+    } finally {
+        await driver.quit();
+    }
+})();
+
+
+run the index.js Program
+>node index.js
+
